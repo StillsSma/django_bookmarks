@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends 'base.html'%}
+{% block content%}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <h1>Your Bookmarks</h1>
+  <body>
+
+<p>
+  {% for bookmark in object_list%}
+  <div class="panel panel-default">
+    <div class="panel body">
+    <a href="bookmarks/{{bookmark.encode}}">{{bookmark}}</a>
+</p>
+
+{% endfor %}
+
+  </body>
+</html>
+{% endblock %}
