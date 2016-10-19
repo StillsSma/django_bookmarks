@@ -20,3 +20,12 @@ class Bookmark(models.Model):
 
     class Meta:
         ordering = ("-created", )
+
+class Click(models.Model):
+    user = models.ForeignKey('auth.User')
+    bookmark = models.ForeignKey('app.Bookmark')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    value = models.BooleanField()
+
+    def __str__(self):
+        return "{} - {}".format(self.bookmark, self.timestamp)

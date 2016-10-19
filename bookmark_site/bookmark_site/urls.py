@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from app.views import BookmarkView, BookmarkCreateView, blank_view
+from app.views import BookmarkView, BookmarkCreateView, redirect_view, UserCreateView, \
+                      BookmarkUpdateView, BookmarkDeleteView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^$', BookmarkView.as_view(), name="bookmark_view"),
+    url(r'^bookmarks/create_user/$', UserCreateView.as_view(), name="user_create_view"),
     url (r'^bookmarks/create/$', BookmarkCreateView.as_view(), name="bookmark_create_view"),
-    url (r'^bookmarks/?P<short_url>\w+/$', blank_view, name="blank_view")
+    url (r'^bookmarks/update/(?P<pk>\d+)/$', BookmarkUpdateView.as_view(), name="bookmark_update_view"),
+    url (r'^bookmarks/delete/(?P<pk>\d+)/$', BookmarkDeleteView.as_view(), name="bookmark_delete_view"),
+    url (r'^bookmarks/(?P<short_url>\w+)/$', redirect_view, name="redirect_view"),
+
 ]
