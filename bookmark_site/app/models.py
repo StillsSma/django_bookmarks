@@ -9,6 +9,7 @@ class Bookmark(models.Model):
     description = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('auth.User')
+    is_private = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -16,6 +17,9 @@ class Bookmark(models.Model):
     def encode(self):
         hashids = Hashids().encode((self.id + 1000000))
         return hashids
+
+    def click_count(self):
+        return Click.objects.filter(user=self.user).filter(bookmark=self.id).count()
 
 
     class Meta:

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Your Bookmarks</h1>
+<h3><a href="{% url 'bookmark_create_view' %}">Create Bookmark</a>
+</h3>
+{% for bookmark in object_list%}
+<div class="panel panel-default">
+  <div class="panel-heading">  <a href="bookmarks/{{bookmark.encode}}">{{bookmark}}</a>
+  <span class="label label-info">  Clicks: {{ bookmark.click_count }}</span></div>
+
+  <div class="panel body">
+  <a href="update/{{bookmark.id}}">Update</a>
+  <a href="delete/{{bookmark.id}}">Delete</a>
+
+
+  </div>
+</div>
+{% endfor %}
+
+
+
+
+
+{% endblock %}

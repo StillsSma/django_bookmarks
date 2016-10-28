@@ -7,38 +7,22 @@
     <title></title>
   </head>
 
-  <body>
 
+  <h3>Public Bookmarks</h3>
+</p>
 <p>
-{% if request.user.is_authenticated %}
-<a href="{% url 'bookmark_create_view' %}">Create Bookmark</a>
-
-  <h1>Your Bookmarks</h1>
   {% for bookmark in object_list%}
   <div class="panel panel-default">
     <div class="panel body">
     <a href="bookmarks/{{bookmark.encode}}">{{bookmark}}</a>
-    <a href="bookmarks/update/{{bookmark.id}}">Update Existing Bookmark</a>
-    <a href="bookmarks/delete/{{bookmark.id}}">Delete</a>
+     <span class="label label-info">  {{ bookmark.click_count }}</span>
     </div>
   </div>
-
-
-</p>
   {% endfor %}
-
-{% else %}
-<p>
 </p>
-<p>
-  <h3>Login to see your bookmarks</h3>
-</p>
-{% endif %}
 
 
 
 
 
-  </body>
-</html>
 {% endblock %}

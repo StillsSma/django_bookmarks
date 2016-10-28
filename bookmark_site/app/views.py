@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
 from hashids import Hashids
 
 
@@ -16,17 +17,22 @@ class BookmarkView(ListView):
     model = Bookmark
 
     def get_queryset(self):
-        try:
-            return Bookmark.objects.filter(user=self.request.user)
-        except TypeError:
-            return Bookmark.objects.all()
+        return Bookmark.objects.filter(is_private=False)
+
+class ProfileView(ListView):
+    template_name = "profile.html"
+    model = Bookmark
+
+    def get_queryset(self):
+        return Bookmark.objects.filter(user=self.request.user)
+
 
 
 
 class BookmarkCreateView(CreateView):
     model = Bookmark
-    success_url = "/"
-    fields = ("full_url", "title", "description")
+    success_url = reverse_lazy("profile_view")
+    fields = ("full_url", "title", "description", "is_private")
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -36,13 +42,13 @@ class BookmarkCreateView(CreateView):
 
 class BookmarkUpdateView(UpdateView):
     model = Bookmark
-    fields = ("full_url", "title", "description")
+    fields = ("full_url", "title", "description", "is_private")
     template_name_suffix = '_update_form'
-    success_url = "/"
+    success_url = reverse_lazy("profile_view")
 
 class BookmarkDeleteView(DeleteView):
     model = Bookmark
-    success_url = "/"
+    success_url = reverse_lazy("profile_view")
 
 def redirect_view(request, short_url):
     number = Hashids().decode(short_url)
@@ -57,5 +63,5 @@ def redirect_view(request, short_url):
 
 class UserCreateView(CreateView):
     model = User
-    success_url = "/"
+    success_url = reverse_lazy("bookmark_view")
     form_class = UserCreationForm
