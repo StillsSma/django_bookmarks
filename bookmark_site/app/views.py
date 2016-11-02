@@ -54,7 +54,7 @@ def redirect_view(request, short_url):
     number = Hashids().decode(short_url)
     var = Bookmark.objects.get(pk=number[0] - 1000000)
     user = request.user
-    bookmark = Bookmark.objects.get(id=7)
+    #bookmark = Bookmark.objects.get(id=7)
     if request.method == 'GET':
         c = Click(user=user ,bookmark=var ,value=True)
         c.save()

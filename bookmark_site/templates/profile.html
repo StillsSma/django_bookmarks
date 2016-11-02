@@ -6,7 +6,7 @@
 </h3>
 {% for bookmark in object_list%}
 <div class="panel panel-default">
-  <div class="panel-heading">  <a href="bookmarks/{{bookmark.encode}}">{{bookmark}}</a>
+  <div class="panel-heading">  <a href="{% url 'redirect_view' bookmark.encode %}">{{bookmark}}</a>
   <span class="label label-info">  Clicks: {{ bookmark.click_count }}</span></div>
 
   <div class="panel body">
